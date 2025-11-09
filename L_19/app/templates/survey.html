@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Survey Details</h2>
+<p>Title: {{ survey.title }}</p>
+<p>Description: {{ survey.description }}</p>
+<p>Created By: {{ survey.user_name if survey.user_name else 'User not found' }}</p>
+<p>Created at: {{ survey.created_at.strftime('%Y-%m-%d %H:%M:%S')}}</p>
+<p>Status: {{ 'Anonymous' if survey.is_anonymous else 'Not Anonymous' }}</p>
+ 
+<h2>Options to vote</h2>
+<form method="post" action="/submit_vote">
+    <input type="hidden" name="survey_id" value="{{ survey.id }}" />
+
+        {% for option in options %}
+        <div class="checkbox-group">
+        <input type="checkbox" name="options" value="{{ option.id }}" />
+            {{ option.description }}
+        </div>
+        <br>
+        {% endfor %}
+
+        {% if session.user_id != survey.created_by and is_voted %}
+        <button type="submit">Submit Vote</button>{%endif%}
+        </form>
+
+        {% if session.user_id == survey.created_by %}
+        <br>
+        <a href="{{ url_for('survey.add_option', survey_id=survey.id) }}"
+            class="btn btn-primary">Add option</a>
+        {%endif%}
+        
+        <br>
+        {% if session.user_id == survey.created_by or is_voted %}
+        <a href="{{ url_for('survey.get_votes_for_survey', survey_id=survey.id) }}"
+        class="btn btn-secondary">View Votes
+        </a>
+        {% endif %}
+
+{% endblock %}

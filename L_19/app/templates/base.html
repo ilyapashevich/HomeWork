@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Survey App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}"/>
+</head>
+<body>
+    <nav>
+        <a href="{{ url_for('index')}}">All Surveys</a>
+        <a href="{{ url_for('create_survey')}}">Create Survey</a>
+        
+        {% if session.get('loggedin') %}
+            <a href="{{ url_for('logout')}}">LogOut</a>
+            Hello, {{ session.user_name }}
+        {% else %}
+            <a href="{{ url_for('login')}}">LogIn</a>
+        {% endif %}
+    </nav>
+
+    <div class="container">
+        {% with messages = get_flashed_messages() %}
+            {%if messages %}
+                <ul class="flashes">
+                    {% for message in messages %}
+                    <li>{{ message }} </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            {% block content%}
+            {% endblock%}
+        {% endwith %}
+    </div>
+
+</body>
+</html>
