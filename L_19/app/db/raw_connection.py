@@ -1,7 +1,7 @@
 from psycopg2 import pool
 from flask import g
 
-from app.config import DATABASE_CONFIG
+from config import DATABASE_CONFIG
 
 
 connection_pool = pool.SimpleConnectionPool(

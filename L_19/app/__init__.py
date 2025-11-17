@@ -1,7 +1,7 @@
 from flask import Flask
 
-from .auth.views import auth_bp
-from .survey.views import survey_bp
+from auth.views import auth_bp
+from survey.views import survey_bp
 
 
 def create_app():

@@ -3,12 +3,13 @@ from werkzeug.security import check_password_hash
 
 import functools
 
-from app.db.user_logic import LogicProvider as UserLogicProvider
+from db.user_logic import LogicProvider as UserLogicProvider
 
 user_logic = UserLogicProvider('orm')
 
 
 auth_bp = Blueprint('auth', __name__, template_folder='templates', url_prefix='/auth')
+
 
 def login_required(view):
     @functools.wraps(view)
